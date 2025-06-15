@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + React</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+  <script>
+    // window.fbAsyncInit = function () {
+    //   FB.init({
+    //     appId: 'Y693010736934979', // 👈 Replace with your app ID
+    //     cookie: true,
+    //     xfbml: false,
+    //     version: 'v18.0'
+    //   });
+
+    //   // Optional logging
+    //   FB.AppEvents.logPageView();
+    // };
+
+    // (function (d, s, id) {
+    //   var js,
+    //     fjs = d.getElementsByTagName(s)[0];
+    //   if (d.getElementById(id)) {
+    //     return;
+    //   }
+    //   js = d.createElement(s);
+    //   js.id = id;
+    //   js.src = 'https://connect.facebook.net/en_US/sdk.js';
+    //   fjs.parentNode.insertBefore(js, fjs);
+    // })(document, 'script', 'facebook-jssdk');
+
+    let fbInitialized = false;
+
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: 'Y693010736934979',
+        cookie: true,
+        xfbml: false,
+        version: 'v18.0'
+      });
+
+      fbInitialized = true;
+      console.log('Facebook SDK Initialized');
+    };
+
+    function handleFBLogin() {
+      if (!fbInitialized) {
+        console.error("FB SDK not initialized yet.");
+        return;
+      }
+
+      FB.login(function (response) {
+        if (response.authResponse) {
+          console.log("User logged in:", response);
+        } else {
+          console.log("User cancelled login or did not fully authorize.");
+        }
+      }, { scope: 'email' });
+    }
+
+  </script>
+</body>
+
+</html>
